@@ -1,7 +1,4 @@
 import { TestModule } from "./0-tests/test.module";
-import { ProductModule } from "./1-products/product.module";
-import { ShopModule } from "./1-shops/shop.module";
-import { BannerModule } from "./2-banners/banner.module";
 import { AuthModule } from "./pre-built/1-auth/auth.module";
 import { UserModule } from "./pre-built/1-users/user.module";
 import { WardModule } from "./pre-built/10-wards/ward.module";
@@ -41,8 +38,5 @@ export const RouteModules = [
 	NotificationModule,
 
 	// features
-	ShopModule,
-	BannerModule,
-	ProductModule,
 	TestModule,
 ];
