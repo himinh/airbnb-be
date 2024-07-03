@@ -8,7 +8,7 @@ import { HydratedDocument, Types } from "mongoose";
 })
 export class Booking {
 	userId: Types.ObjectId;
-	listingId;
+	listingId: Types.ObjectId;
 	startDate;
 	endDate;
 	totalPrice;
