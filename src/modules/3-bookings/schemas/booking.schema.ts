@@ -1,5 +1,5 @@
 import { Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument } from "mongoose";
+import { HydratedDocument, Types } from "mongoose";
 
 @Schema({
 	timestamps: true,
@@ -7,7 +7,7 @@ import { HydratedDocument } from "mongoose";
 	collection: "bookings",
 })
 export class Booking {
-	userId;
+	userId: Types.ObjectId;
 	listingId;
 	startDate;
 	endDate;
