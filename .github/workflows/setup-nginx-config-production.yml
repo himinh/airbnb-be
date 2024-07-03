@@ -1,0 +1,37 @@
+name: Setup Nginx Config
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  setup-nginx:
+    runs-on: ubuntu-latest
+
+    env:
+      isConfigured: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Copy nginx configuration
+        if: env.isConfigured == 'false'
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo cp /home/ubuntu/asnest-prod/source/.nginx-configs/setup.conf /etc/nginx/sites-available/asnest-prod.conf
+            sudo ln -s /etc/nginx/sites-available/asnest-prod.conf /etc/nginx/sites-enabled/asnest-prod.conf
+
+      - name: Restart Nginx
+        if: env.isConfigured == 'false'
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: sudo service nginx restart
