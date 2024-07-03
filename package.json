@@ -106,8 +106,8 @@
 	},
 	"lint-staged": {
 		"**/*.{js,ts}": [
-			"pnpm lint:fix",
-			"commitlint --edit $1"
+			"pnpm lint",
+			"npx commitlint --edit"
 		]
 	},
 	"husky": {
