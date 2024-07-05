@@ -1,16 +1,27 @@
-import { IsISO8601, IsMongoId, IsNumber } from "class-validator";
+import { IsDateString, IsNotEmpty, IsNumber } from "class-validator";
 import { Types } from "mongoose";
+import { IsObjectId, ToObjectId } from "~common/validators/objectId";
 
 export class CreateBookingDto {
-	@IsMongoId()
-	userString: string;
-
-	@IsMongoId()
+	@IsNotEmpty()
+	@IsObjectId()
+	@ToObjectId()
 	userId: Types.ObjectId;
 
-	@IsISO8601()
-	dateBirth: string;
+	@IsNotEmpty()
+	@IsObjectId()
+	@ToObjectId()
+	listingId: Types.ObjectId;
 
+	@IsNotEmpty()
+	@IsDateString()
+	startDate: Date;
+
+	@IsNotEmpty()
+	@IsDateString()
+	endDate: Date;
+
+	@IsNotEmpty()
 	@IsNumber()
-	position: number;
+	totalPrice: number;
 }

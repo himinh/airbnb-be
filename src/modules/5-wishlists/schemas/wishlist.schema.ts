@@ -1,5 +1,5 @@
-import { Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument } from "mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { HydratedDocument, SchemaTypes, Types } from "mongoose";
 
 @Schema({
 	timestamps: true,
@@ -7,8 +7,11 @@ import { HydratedDocument } from "mongoose";
 	collection: "wishlists",
 })
 export class Wishlist {
-	userId;
-	listingId;
+	@Prop({ type: SchemaTypes.ObjectId, required: true })
+	userId: Types.ObjectId;
+
+	@Prop({ type: SchemaTypes.ObjectId, required: true })
+	listingId: Types.ObjectId;
 }
 
 export type WishlistDocument = Wishlist & HydratedDocument<Wishlist>;

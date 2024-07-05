@@ -1,16 +1,23 @@
-import { IsISO8601, IsMongoId, IsNumber } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 import { Types } from "mongoose";
+import { IsObjectId, ToObjectId } from "~common/validators/objectId";
 
 export class CreateReviewDto {
-	@IsMongoId()
-	userString: string;
-
-	@IsMongoId()
+	@IsNotEmpty()
+	@IsObjectId()
+	@ToObjectId()
 	userId: Types.ObjectId;
 
-	@IsISO8601()
-	dateBirth: string;
+	@IsNotEmpty()
+	@IsObjectId()
+	@ToObjectId()
+	listingId: Types.ObjectId;
 
+	@IsNotEmpty()
 	@IsNumber()
-	position: number;
+	rating: number;
+
+	@IsOptional()
+	@IsString()
+	comment?: string;
 }

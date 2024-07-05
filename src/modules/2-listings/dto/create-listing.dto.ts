@@ -8,11 +8,13 @@ import {
 	IsString,
 } from "class-validator";
 import { Types } from "mongoose";
+import { IsObjectId, ToObjectId } from "~common/validators/objectId";
 import { ListingStatus } from "../enums/listing-status.enum";
 
 export class CreateListingDto {
 	@IsNotEmpty()
-	@IsMongoId()
+	@IsObjectId()
+	@ToObjectId()
 	hostId: Types.ObjectId;
 
 	@IsNotEmpty()

@@ -1,13 +1,16 @@
 import { PartialType } from "@nestjs/mapped-types";
-import { IsMongoId, IsOptional, IsString } from "class-validator";
+import { IsOptional, IsString } from "class-validator";
+import { Types } from "mongoose";
+import { IsObjectId, ToObjectId } from "~common/validators/objectId";
 import CreateShippingAddressDto from "./create-shipping-address.dto";
 
 export class OrderShippingAddressDto extends PartialType(
 	CreateShippingAddressDto,
 ) {
 	@IsOptional()
-	@IsMongoId()
-	shippingAddressId: string;
+	@IsObjectId()
+	@ToObjectId()
+	shippingAddressId: Types.ObjectId;
 
 	@IsOptional()
 	@IsString()

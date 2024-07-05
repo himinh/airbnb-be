@@ -1,9 +1,12 @@
-import { IsMongoId, IsNotEmpty, IsNumber, IsOptional } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional } from "class-validator";
+import { Types } from "mongoose";
+import { IsObjectId, ToObjectId } from "~common/validators/objectId";
 
 export class OrderProductDto {
 	@IsNotEmpty()
-	@IsMongoId()
-	productId: string;
+	@IsObjectId()
+	@ToObjectId()
+	productId: Types.ObjectId;
 
 	@IsNotEmpty()
 	@IsNumber()

@@ -1,5 +1,5 @@
-import { Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument } from "mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { HydratedDocument, Types } from "mongoose";
 
 @Schema({
 	timestamps: true,
@@ -7,10 +7,17 @@ import { HydratedDocument } from "mongoose";
 	collection: "gifts",
 })
 export class Gift {
-	userId;
-	recipientEmail;
-	amount;
-	message;
+	@Prop({ type: Types.ObjectId, required: true })
+	userId: Types.ObjectId;
+
+	@Prop({ type: String, required: true })
+	recipientEmail: string;
+
+	@Prop({ type: Number, required: true })
+	amount: number;
+
+	@Prop({ type: String, required: true })
+	message: string;
 }
 
 export type GiftDocument = Gift & HydratedDocument<Gift>;

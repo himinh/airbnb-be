@@ -1,16 +1,12 @@
-import { IsISO8601, IsMongoId, IsNumber } from "class-validator";
+import { IsNotEmpty } from "class-validator";
 import { Types } from "mongoose";
+import { IsObjectId, ToObjectId } from "~common/validators/objectId";
 
 export class CreateWishlistDto {
-	@IsMongoId()
-	userString: string;
+	@IsNotEmpty()
+	@IsObjectId()
+	@ToObjectId()
+	listingId: Types.ObjectId;
 
-	@IsMongoId()
 	userId: Types.ObjectId;
-
-	@IsISO8601()
-	dateBirth: string;
-
-	@IsNumber()
-	position: number;
 }

@@ -1,16 +1,22 @@
-import { IsISO8601, IsMongoId, IsNumber } from "class-validator";
-import { Types } from "mongoose";
+import { Transform } from "class-transformer";
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { ObjectId } from "mongodb";
 
 export class CreateGiftDto {
-	@IsMongoId()
-	userString: string;
+	@IsNotEmpty()
+	@IsString()
+	@Transform(({ value }) => new ObjectId(value))
+	userId: ObjectId;
 
-	@IsMongoId()
-	userId: Types.ObjectId;
+	@IsNotEmpty()
+	@IsEmail()
+	recipientEmail: string;
 
-	@IsISO8601()
-	dateBirth: string;
-
+	@IsNotEmpty()
 	@IsNumber()
-	position: number;
+	amount: number;
+
+	@IsNotEmpty()
+	@IsString()
+	message: string;
 }

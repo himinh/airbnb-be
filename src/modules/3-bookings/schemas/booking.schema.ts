@@ -1,5 +1,5 @@
-import { Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument, Types } from "mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { HydratedDocument, SchemaTypes, Types } from "mongoose";
 
 @Schema({
 	timestamps: true,
@@ -7,11 +7,20 @@ import { HydratedDocument, Types } from "mongoose";
 	collection: "bookings",
 })
 export class Booking {
+	@Prop({ type: SchemaTypes.ObjectId, required: true })
 	userId: Types.ObjectId;
+
+	@Prop({ type: SchemaTypes.ObjectId, required: true })
 	listingId: Types.ObjectId;
-	startDate;
-	endDate;
-	totalPrice;
+
+	@Prop({ type: Date, required: true })
+	startDate: Date;
+
+	@Prop({ type: Date, required: true })
+	endDate: Date;
+
+	@Prop({ type: Number, required: true })
+	totalPrice: number;
 }
 
 export type BookingDocument = Booking & HydratedDocument<Booking>;

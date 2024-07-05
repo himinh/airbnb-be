@@ -1,4 +1,11 @@
 import { TestModule } from "./0-tests/test.module";
+import { CategoryModule } from "./1-categories/category.module";
+import { ListingModule } from "./2-listings/listing.module";
+import { BookingModule } from "./3-bookings/booking.module";
+import { ReviewModule } from "./4-reviews/review.module";
+import { WishlistModule } from "./5-wishlists/wishlist.module";
+import { TripModule } from "./6-trips/trip.module";
+import { GiftModule } from "./7-gifts/gift.module";
 import { AuthModule } from "./pre-built/1-auth/auth.module";
 import { UserModule } from "./pre-built/1-users/user.module";
 import { WardModule } from "./pre-built/10-wards/ward.module";
@@ -39,4 +46,11 @@ export const RouteModules = [
 
 	// features
 	TestModule,
+	CategoryModule,
+	ListingModule,
+	BookingModule,
+	ReviewModule,
+	WishlistModule,
+	TripModule,
+	GiftModule,
 ];
