@@ -7,6 +7,7 @@ import {
 	HttpStatus,
 	NotFoundException,
 	Param,
+	ParseEnumPipe,
 	Patch,
 	Post,
 } from "@nestjs/common";
@@ -14,7 +15,10 @@ import { Types } from "mongoose";
 import { ParseObjectIdPipe } from "src/utils/parse-object-id.pipe";
 import { stringIdToObjectId } from "src/utils/stringId_to_objectId";
 import { GetAqp } from "~decorators/get-aqp.decorator";
+import { GetCurrentUserId } from "~decorators/get-current-user-id.decorator";
+import { Public } from "~decorators/public.decorator";
 import { PaginationDto } from "~dto/pagination.dto";
+import { ActionEnum } from "~enums/action.enum";
 import { CreateListingDto } from "./dto/create-listing.dto";
 import { UpdateListingDto } from "./dto/update-listing.dto";
 import { ListingService } from "./listing.service";
@@ -24,22 +28,19 @@ export class ListingController {
 	constructor(private readonly listingService: ListingService) {}
 
 	//  ----- Method: GET -----
+	@Public()
 	@Get("/paginate")
 	async paginate(@GetAqp() { filter, ...options }: PaginationDto) {
 		return this.listingService.paginate(filter, options);
 	}
 
+	@Public()
 	@Get("/:id")
 	async findOneById(
 		@Param("id", ParseObjectIdPipe) id: Types.ObjectId,
 		@GetAqp() { projection, populate }: PaginationDto,
 	) {
 		return this.listingService.findById(id, { projection, populate });
-	}
-
-	@Get("/")
-	async findMany(@GetAqp() { filter, ...options }: PaginationDto) {
-		return this.listingService.findMany(filter, options);
 	}
 
 	//  ----- Method: POST -----
@@ -50,6 +51,25 @@ export class ListingController {
 	}
 
 	//  ----- Method: PATCH -----
+	@Patch("/:id/wishlist/:action")
+	@HttpCode(HttpStatus.OK)
+	async addToWishlist(
+		@GetCurrentUserId() userId: Types.ObjectId,
+		@Param("id", ParseObjectIdPipe) listingId: Types.ObjectId,
+		@Param("action", new ParseEnumPipe(ActionEnum)) action: ActionEnum,
+	) {
+		switch (action) {
+			case ActionEnum.Add:
+				return this.listingService.addToWishlist(userId, listingId);
+
+			case ActionEnum.Remove:
+				return this.listingService.removeFromWishlist(userId, listingId);
+
+			default:
+				throw new NotFoundException("Action not found!");
+		}
+	}
+
 	@Patch("/:id")
 	@HttpCode(HttpStatus.OK)
 	async update(

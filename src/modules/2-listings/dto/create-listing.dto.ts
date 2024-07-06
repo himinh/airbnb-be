@@ -2,7 +2,6 @@ import {
 	IsArray,
 	IsDateString,
 	IsEnum,
-	IsMongoId,
 	IsNotEmpty,
 	IsNumber,
 	IsString,
@@ -19,7 +18,8 @@ export class CreateListingDto {
 
 	@IsNotEmpty()
 	@IsArray()
-	@IsMongoId({ each: true })
+	@IsObjectId({ each: true })
+	@ToObjectId({ each: true })
 	categoryIds: Types.ObjectId[];
 
 	@IsNotEmpty()
@@ -67,8 +67,4 @@ export class CreateListingDto {
 	@IsNotEmpty()
 	@IsNumber()
 	bathroomCount: number;
-
-	@IsNotEmpty()
-	@IsNumber()
-	reviewCount: number;
 }

@@ -14,6 +14,7 @@ import { Types } from "mongoose";
 import { ParseObjectIdPipe } from "src/utils/parse-object-id.pipe";
 import { stringIdToObjectId } from "src/utils/stringId_to_objectId";
 import { GetAqp } from "~decorators/get-aqp.decorator";
+import { Public } from "~decorators/public.decorator";
 import { PaginationDto } from "~dto/pagination.dto";
 import { CategoryService } from "./category.service";
 import { CreateCategoryDto } from "./dto/create-category.dto";
@@ -23,12 +24,8 @@ import { UpdateCategoryDto } from "./dto/update-category.dto";
 export class CategoryController {
 	constructor(private readonly categoryService: CategoryService) {}
 
-	//  ----- Method: GET -----
-	@Get("/paginate")
-	async paginate(@GetAqp() { filter, ...options }: PaginationDto) {
-		return this.categoryService.paginate(filter, options);
-	}
-
+	//  ----- Method: GET -----@
+	@Public()
 	@Get("/:id")
 	async findOneById(
 		@Param("id", ParseObjectIdPipe) id: Types.ObjectId,
@@ -37,6 +34,7 @@ export class CategoryController {
 		return this.categoryService.findById(id, { projection, populate });
 	}
 
+	@Public()
 	@Get("/")
 	async findMany(@GetAqp() { filter, ...options }: PaginationDto) {
 		return this.categoryService.findMany(filter, options);
@@ -56,11 +54,11 @@ export class CategoryController {
 		@Param("id", ParseObjectIdPipe) id: Types.ObjectId,
 		@Body() body: UpdateCategoryDto,
 	) {
-		const found = await this.categoryService.findById(id);
+		const updated = await this.categoryService.updateById(id, body);
 
-		if (!found) throw new NotFoundException("Category not found!");
+		if (!updated) throw new NotFoundException("Category not found!");
 
-		return this.categoryService.updateById(id, body);
+		return updated;
 	}
 
 	//  ----- Method: DELETE -----

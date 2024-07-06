@@ -3,9 +3,6 @@ import { Types } from "mongoose";
 import { IsObjectId, ToObjectId } from "~common/validators/objectId";
 
 export class CreateReviewDto {
-	@IsNotEmpty()
-	@IsObjectId()
-	@ToObjectId()
 	userId: Types.ObjectId;
 
 	@IsNotEmpty()

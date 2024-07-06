@@ -5,7 +5,6 @@ import {
 	Get,
 	HttpCode,
 	HttpStatus,
-	NotFoundException,
 	Param,
 	Patch,
 	Post,
@@ -14,6 +13,7 @@ import { Types } from "mongoose";
 import { ParseObjectIdPipe } from "src/utils/parse-object-id.pipe";
 import { stringIdToObjectId } from "src/utils/stringId_to_objectId";
 import { GetAqp } from "~decorators/get-aqp.decorator";
+import { GetCurrentUserId } from "~decorators/get-current-user-id.decorator";
 import { PaginationDto } from "~dto/pagination.dto";
 import { CreateReviewDto } from "./dto/create-review.dto";
 import { UpdateReviewDto } from "./dto/update-review.dto";
@@ -45,36 +45,51 @@ export class ReviewController {
 	//  ----- Method: POST -----
 	@Post("/")
 	@HttpCode(HttpStatus.CREATED)
-	async create(@Body() body: CreateReviewDto) {
-		return this.reviewService.create(body);
+	async create(
+		@GetCurrentUserId() userId: Types.ObjectId,
+		@Body() body: CreateReviewDto,
+	) {
+		Object.assign(body, { userId });
+
+		return this.reviewService.createReview(body);
 	}
 
 	//  ----- Method: PATCH -----
 	@Patch("/:id")
 	@HttpCode(HttpStatus.OK)
 	async update(
+		@GetCurrentUserId() userId: Types.ObjectId,
 		@Param("id", ParseObjectIdPipe) id: Types.ObjectId,
 		@Body() body: UpdateReviewDto,
 	) {
-		const found = await this.reviewService.findById(id);
-
-		if (!found) throw new NotFoundException("Review not found!");
-
-		return this.reviewService.updateById(id, body);
+		return this.reviewService.updateReviewById(id, { ...body, userId });
 	}
 
 	//  ----- Method: DELETE -----
 	@Delete("/:ids/ids")
 	@HttpCode(HttpStatus.OK)
 	async deleteManyByIds(@Param("ids") ids: string) {
-		return this.reviewService.deleteMany({
-			_id: { $in: ids.split(",").map((id) => stringIdToObjectId(id)) },
-		});
+		const deleted = await Promise.allSettled(
+			ids
+				.split(",")
+				.map((id) =>
+					this.reviewService.deleteReviewById(stringIdToObjectId(id)),
+				),
+		);
+
+		const deletedCount = deleted.filter(
+			(item) => item.status === "fulfilled",
+		).length;
+
+		return {
+			deletedCount,
+			acknowledged: Boolean(deletedCount),
+		};
 	}
 
 	@Delete("/:id")
 	@HttpCode(HttpStatus.OK)
 	async delete(@Param("id", ParseObjectIdPipe) id: Types.ObjectId) {
-		return this.reviewService.deleteById(id);
+		return this.reviewService.deleteReviewById(id);
 	}
 }

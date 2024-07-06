@@ -1,0 +1,56 @@
+- Category: 
+image: string;
+name: string;
+position?: number;
+isShow: boolean;
+
+
+- Listing:
+hostId: Types.ObjectId;
+categoryIds: Types.ObjectId[];
+title: string;
+description: string;
+status: ListingStatus;
+price: number;
+locationValue: string;
+thumbnail: string;
+images: string;
+publishAt: Date;
+guestCount: number;
+roomCount: number;
+bathroomCount: number;
+reviewCount: number;
+viewedCount?: number;
+export type ListingDocument = Listing & HydratedDocument<Listing>;
+export const ListingSchema = SchemaFactory.createForClass(Listing);
+
+- Booking:
+userId: Types.ObjectId;
+listingId: Types.ObjectId;
+startDate: Date;
+endDate: Date;
+totalPrice: number;
+
+
+- Reviews:
+userId: Types.ObjectId;
+listingId: Types.ObjectId;
+rating: number;
+comment?: string;
+
+
+- Wishlist
+userId: Types.ObjectId;
+listingId: Types.ObjectId;
+
+- Trip
+userId: Types.ObjectId;
+bookingId: Types.ObjectId;
+tripDate: Date;
+
+
+- Gift
+userId: Types.ObjectId;
+recipientEmail: string;
+amount: number;
+message: string;

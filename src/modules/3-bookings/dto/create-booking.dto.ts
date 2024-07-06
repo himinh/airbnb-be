@@ -1,4 +1,4 @@
-import { IsDateString, IsNotEmpty, IsNumber } from "class-validator";
+import { IsDateString, IsNotEmpty } from "class-validator";
 import { Types } from "mongoose";
 import { IsObjectId, ToObjectId } from "~common/validators/objectId";
 
@@ -20,8 +20,4 @@ export class CreateBookingDto {
 	@IsNotEmpty()
 	@IsDateString()
 	endDate: Date;
-
-	@IsNotEmpty()
-	@IsNumber()
-	totalPrice: number;
 }

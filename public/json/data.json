@@ -1,0 +1,118 @@
+{
+	"Category": [
+		{
+			"image": "https://example.com/images/category1.jpg",
+			"name": "Beachfront",
+			"position": 1,
+			"isShow": true
+		},
+		{
+			"image": "https://example.com/images/category2.jpg",
+			"name": "Mountain Retreat",
+			"position": 2,
+			"isShow": false
+		}
+	],
+	"Listing": [
+		{
+			"hostId": "66890541f61f889208a471bb",
+			"categoryIds": ["668905da4553e773c3a2f1cc", "668905e54553e773c3a2f1ce"],
+			"title": "Luxurious Beach House",
+			"description": "A beautiful house right on the beach with stunning ocean views.",
+			"status": "ACTIVE",
+			"price": 500,
+			"locationValue": "Malibu, CA",
+			"thumbnail": "https://example.com/images/listing1_thumbnail.jpg",
+			"images": [
+				"https://example.com/images/listing1_1.jpg",
+				"https://example.com/images/listing1_2.jpg"
+			],
+			"publishAt": "2024-06-01T00:00:00.000Z",
+			"guestCount": 8,
+			"roomCount": 4,
+			"bathroomCount": 3
+		},
+		{
+			"hostId": "66890541f61f889208a471bb",
+			"categoryIds": ["668905da4553e773c3a2f1cc", "668905e54553e773c3a2f1ce"],
+			"title": "Cozy Mountain Cabin",
+			"description": "A quaint cabin nestled in the mountains, perfect for a peaceful getaway.",
+			"status": "active",
+			"price": 300,
+			"locationValue": "Aspen, CO",
+			"thumbnail": "https://example.com/images/listing2_thumbnail.jpg",
+			"images": [
+				"https://example.com/images/listing2_1.jpg",
+				"https://example.com/images/listing2_2.jpg"
+			],
+			"publishAt": "2024-06-15T00:00:00.000Z",
+			"guestCount": 4,
+			"roomCount": 2,
+			"bathroomCount": 1
+		}
+	],
+	"Booking": [
+		{
+			"userId": "668908f90a595a3f74173eb3",
+			"listingId": "668907beffaaa250d0ea03c0",
+			"startDate": "2024-07-01T00:00:00.000Z",
+			"endDate": "2024-07-07T00:00:00.000Z"
+		},
+		{
+			"userId": "668908f90a595a3f74173eb3",
+			"listingId": "668907beffaaa250d0ea03c0",
+			"startDate": "2024-07-01T00:00:00.000Z",
+			"endDate": "2024-07-07T00:00:00.000Z"
+		}
+	],
+	"Reviews": [
+		{
+			"userId": "60b8d6c7d4e9a123d8a8e1fa",
+			"listingId": "60b8d6c7d4e9a123d8a8e1fb",
+			"rating": 5,
+			"comment": "Amazing place! Highly recommend."
+		},
+		{
+			"userId": "60b8d6c7d4e9a123d8a8e1fc",
+			"listingId": "60b8d6c7d4e9a123d8a8e1fd",
+			"rating": 4,
+			"comment": "Great location, but a bit pricey."
+		}
+	],
+	"Wishlist": [
+		{
+			"userId": "60b8d6c7d4e9a123d8a8e1fe",
+			"listingId": "60b8d6c7d4e9a123d8a8e1ff"
+		},
+		{
+			"userId": "60b8d6c7d4e9a123d8a8e200",
+			"listingId": "60b8d6c7d4e9a123d8a8e201"
+		}
+	],
+	"Trip": [
+		{
+			"userId": "60b8d6c7d4e9a123d8a8e202",
+			"bookingId": "60b8d6c7d4e9a123d8a8e203",
+			"tripDate": "2024-07-01T00:00:00.000Z"
+		},
+		{
+			"userId": "60b8d6c7d4e9a123d8a8e204",
+			"bookingId": "60b8d6c7d4e9a123d8a8e205",
+			"tripDate": "2024-08-01T00:00:00.000Z"
+		}
+	],
+	"Gift": [
+		{
+			"userId": "60b8d6c7d4e9a123d8a8e206",
+			"recipientEmail": "recipient1@example.com",
+			"amount": 100,
+			"message": "Happy Birthday!"
+		},
+		{
+			"userId": "60b8d6c7d4e9a123d8a8e207",
+			"recipientEmail": "recipient2@example.com",
+			"amount": 200,
+			"message": "Congratulations on your new home!"
+		}
+	]
+}

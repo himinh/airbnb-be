@@ -37,16 +37,11 @@ export class BookingController {
 		return this.bookingService.findById(id, { projection, populate });
 	}
 
-	@Get("/")
-	async findMany(@GetAqp() { filter, ...options }: PaginationDto) {
-		return this.bookingService.findMany(filter, options);
-	}
-
 	//  ----- Method: POST -----
 	@Post("/")
 	@HttpCode(HttpStatus.CREATED)
 	async create(@Body() body: CreateBookingDto) {
-		return this.bookingService.create(body);
+		return this.bookingService.createBooking(body);
 	}
 
 	//  ----- Method: PATCH -----

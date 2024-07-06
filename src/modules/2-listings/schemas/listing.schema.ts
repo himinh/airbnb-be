@@ -52,10 +52,13 @@ export class Listing {
 	@Prop({ type: Number, required: true })
 	bathroomCount: number;
 
-	@Prop({ type: Number, required: true })
-	reviewCount: number;
+	@Prop({ type: Number })
+	reviewCount?: number;
 
-	@Prop({ type: Number, required: true })
+	@Prop({ type: Number })
+	totalReviewRatings?: number;
+
+	@Prop({ type: Number })
 	viewedCount?: number;
 }
 

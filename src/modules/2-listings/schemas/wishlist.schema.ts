@@ -4,18 +4,17 @@ import { HydratedDocument, SchemaTypes, Types } from "mongoose";
 @Schema({
 	timestamps: true,
 	versionKey: false,
-	collection: "trips",
+	collection: "wishlists",
 })
-export class Trip {
+export class Wishlist {
 	@Prop({ type: SchemaTypes.ObjectId, required: true })
 	userId: Types.ObjectId;
 
 	@Prop({ type: SchemaTypes.ObjectId, required: true })
-	bookingId: Types.ObjectId;
-
-	@Prop({ type: Date, required: true })
-	tripDate: Date;
+	listingId: Types.ObjectId;
 }
 
-export type TripDocument = Trip & HydratedDocument<Trip>;
-export const TripSchema = SchemaFactory.createForClass(Trip);
+export type WishlistDocument = Wishlist & HydratedDocument<Wishlist>;
+export const WishlistSchema = SchemaFactory.createForClass(Wishlist);
+
+WishlistSchema.index({ userId: 1, listingId: 1 }, { unique: true });

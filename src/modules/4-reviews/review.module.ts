@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
+import { ListingModule } from "~modules/2-listings/listing.module";
 import { ReviewController } from "./review.controller";
 import { ReviewService } from "./review.service";
 import { Review, ReviewSchema } from "./schemas/review.schema";
@@ -12,6 +13,7 @@ import { Review, ReviewSchema } from "./schemas/review.schema";
 				schema: ReviewSchema,
 			},
 		]),
+		ListingModule,
 	],
 	controllers: [ReviewController],
 	providers: [ReviewService],
