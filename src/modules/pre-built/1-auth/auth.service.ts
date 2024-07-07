@@ -22,7 +22,7 @@ import { OtpTypeEnum } from "../6-otp/enums/otp-type.enum";
 import { OtpService } from "../6-otp/otp.service";
 import { LoginDto } from "./dto/login.dto";
 import { RegisterDto } from "./dto/register.dto";
-import { SendRegisterTokenDto } from "./dto/send-register-token.dto";
+import { SendOtpDto } from "./dto/send-otp.dto";
 import { SocialLoginDto } from "./dto/social-login.dto";
 import { SocialInterface } from "./interfaces/social.interface";
 
@@ -127,13 +127,13 @@ export class AuthService {
 		return this.tokenService.generateUserAuth(foundUser);
 	}
 
-	async sendRegisterToken(input: RegisterDto) {
+	async sendToken(input: RegisterDto) {
 		await this.userService.validateCreateUser(input);
 
 		const { token, expiresAt } =
 			await this.tokenService.generateUserToken(input);
 
-		await this.mailService.sendRegisterToken(
+		await this.mailService.sendTokenToRegisterUser(
 			{
 				token,
 				expiresAt,
@@ -152,7 +152,7 @@ export class AuthService {
 		};
 	}
 
-	async activateRegisterToken(token: string) {
+	async activateToken(token: string) {
 		const decoded = await this.tokenService.verifyRegisterToken(token);
 
 		// delete key of token
@@ -164,7 +164,7 @@ export class AuthService {
 		return this.register(decoded);
 	}
 
-	async sendRegisterOtp(input: SendRegisterTokenDto) {
+	async sendOtp(input: SendOtpDto) {
 		await this.userService.validateCreateUser(input);
 
 		const otpItem = {
@@ -174,7 +174,19 @@ export class AuthService {
 			otpType: OtpTypeEnum.Register,
 		};
 
-		return this.otpService.sendOtp(otpItem);
+		const { expiresAt, otpCode, ...rest } =
+			await this.otpService.sendOtp(otpItem);
+
+		return {
+			...input,
+			...otpItem,
+			...rest,
+			otpCode:
+				EnvStatic.getAppConfig().nodeEnv === NodeEnv.Development
+					? otpCode
+					: undefined,
+			expiresAt,
+		};
 	}
 
 	async logout(userId: Types.ObjectId, fcmToken?: string) {

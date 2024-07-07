@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument, SchemaTypes, Types } from "mongoose";
 import { ResourceTypeEnum } from "~modules/pre-built/7-uploads/enum/resource-type.enum";
 import { StorageLocationEnum } from "~pre-built/7-uploads/enum/store-location.enum";
+import { UploadType } from "~types/upload-type";
 
 @Schema({
 	timestamps: true,
@@ -19,25 +20,25 @@ export class UserFile {
 	fileName: string;
 
 	@Prop({ type: String, required: true })
-	fileType: string;
+	fileType: UploadType;
 
 	@Prop({ type: String, enum: ResourceTypeEnum, required: true })
 	resourceType: ResourceTypeEnum;
 
-	@Prop({ type: String, default: "" })
-	urlXSmall: string;
+	@Prop({ type: String })
+	urlXSmall?: string;
 
-	@Prop({ type: String, default: "" })
-	urlSmall: string;
+	@Prop({ type: String })
+	urlSmall?: string;
 
-	@Prop({ type: String, default: "" })
-	urlMedium: string;
+	@Prop({ type: String })
+	urlMedium?: string;
 
-	@Prop({ type: String, default: "" })
-	urlLarge: string;
+	@Prop({ type: String })
+	urlLarge?: string;
 
-	@Prop({ type: String, default: "" })
-	urlXLarge: string;
+	@Prop({ type: String })
+	urlXLarge?: string;
 
 	@Prop({ type: String, required: true, index: true })
 	url: string;
@@ -45,13 +46,13 @@ export class UserFile {
 	@Prop({ type: String, enum: StorageLocationEnum, required: true })
 	storageLocation: StorageLocationEnum;
 
-	@Prop({ type: String, default: "" })
+	@Prop({ type: String })
 	fileFolder: string;
 
-	@Prop({ type: Number, default: "" })
+	@Prop({ type: Number })
 	fileSize: number;
 
-	@Prop({ type: String, default: "" })
+	@Prop({ type: String })
 	originalname: string;
 }
 
