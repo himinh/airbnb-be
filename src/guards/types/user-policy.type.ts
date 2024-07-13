@@ -6,4 +6,5 @@ export type UserPolicyType = {
 	blockedUserGroupIds?: Types.ObjectId[];
 	blockedUserIds?: Types.ObjectId[];
 	isPublic: boolean;
+	isAuthenticated: boolean;
 };

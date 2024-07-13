@@ -20,6 +20,7 @@ import { LanguageCodeEnum } from "~enums/language.enum";
 import { CreateNotificationDto } from "./dto/create-notification.dto";
 import { UpdateNotificationDto } from "./dto/update-notification.dto";
 import { NotificationService } from "./notification.service";
+import { NotificationDocument } from "./schemas/notification.schema";
 
 @Controller("notifications")
 export class NotificationController {
@@ -34,7 +35,7 @@ export class NotificationController {
 	) {
 		const pagination = await this.notificationService.paginate(filter, options);
 
-		pagination.docs.forEach((item) => {
+		pagination.data.forEach((item: NotificationDocument) => {
 			this.notificationService.addNotificationDetail(item, language);
 		});
 

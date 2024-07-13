@@ -35,8 +35,8 @@ export class AllExceptionsFilter implements ExceptionFilter {
 		const errorMessage =
 			exception?.message || "Critical internal server error occurred!";
 
-		let title = "Internal Server Error";
-		let statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+		let title = "Internal Server Error",
+			statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
 		if (exception instanceof HttpException) {
 			title = exception.getResponse()["error"];
@@ -60,25 +60,26 @@ export class AllExceptionsFilter implements ExceptionFilter {
 		};
 
 		switch (exception.name) {
-			case ExceptionType.ValidationExceptions:
+			case ExceptionType.ValidationExceptions: // custom validation error (class-validator)
 				exceptionResponse.title = "Validation Exceptions";
 				exceptionResponse.errors = exception.getResponse().errors;
 				exceptionResponse.statusCode = HttpStatus.BAD_REQUEST;
 				break;
 
-			case ExceptionType.ValidationError:
+			case ExceptionType.ValidationError: // mongoose validation error
 				exceptionResponse.title = "Validation Error";
 				exceptionResponse.statusCode = HttpStatus.BAD_REQUEST;
 				exceptionResponse.errors = this._getValidationError(exception);
 				break;
 
-			case ExceptionType.CastError:
+			case ExceptionType.CastError: // mongoose cast error
 				exceptionResponse.title = `Cast Error`;
 				exceptionResponse.statusCode = HttpStatus.BAD_REQUEST;
 				exceptionResponse.errors = this._getCastError(exception);
 				break;
 
 			default:
+				// a duplicate error code in mongoose
 				if (exception.code === MONGODB_CODES.BULK_WRITE_ERROR) {
 					exceptionResponse.title = "Duplicate Field Value Entered";
 					exceptionResponse.statusCode = HttpStatus.CONFLICT;

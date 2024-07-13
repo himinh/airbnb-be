@@ -139,62 +139,6 @@ export class SeedService {
 			);
 		}
 
-		// Delete all provinces,district, wards
-		// await Promise.all([
-		// 	this.provinceService.deleteMany({}),
-		// 	this.districtService.deleteMany({}),
-		// 	this.wardService.deleteMany({}),
-		// ]);
-
-		// await Promise.all(
-		// 	data.map(async (province: any) => {
-		// 		const provinceItem = {
-		// 			name: province.name,
-		// 			type: province.type,
-		// 		};
-
-		// 		// Save province
-		// 		const provinceSaved = await this.provinceService.create(provinceItem);
-
-		// 		// Get provinceId
-		// 		const provinceId = provinceSaved._id;
-
-		// 		const createDistrictsAndWardsPromises = province.districts.map(
-		// 			async (district: any) => {
-		// 				const districtItem = {
-		// 					provinceId,
-		// 					name: district.name,
-		// 					type: district.type,
-		// 				};
-
-		// 				// Save district
-		// 				const districtSaved =
-		// 					await this.districtService.create(districtItem);
-
-		// 				// Get districtId
-		// 				const districtId = districtSaved._id;
-
-		// 				// Store wards of districts
-		// 				const wardSavedPromises = district.wards.map((ward: any) => {
-		// 					const wardItem = {
-		// 						provinceId,
-		// 						districtId,
-		// 						name: ward.name,
-		// 						type: ward.type,
-		// 					};
-
-		// 					return this.wardService.create(wardItem);
-		// 				});
-
-		// 				// Save wards
-		// 				await Promise.all(wardSavedPromises);
-		// 			},
-		// 		);
-
-		// 		await Promise.all(createDistrictsAndWardsPromises);
-		// 	}),
-		// );
-
 		this.logger.log(
 			{
 				totalProvinces: provincePosition,

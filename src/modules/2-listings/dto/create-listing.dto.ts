@@ -50,11 +50,11 @@ export class CreateListingDto {
 	@IsNotEmpty()
 	@IsArray()
 	@IsString({ each: true })
-	images: string;
+	images: string[];
 
 	@IsNotEmpty()
 	@IsDateString()
-	publishAt: Date;
+	publishDate: Date;
 
 	@IsNotEmpty()
 	@IsNumber()

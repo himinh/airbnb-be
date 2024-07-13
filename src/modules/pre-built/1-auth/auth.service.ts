@@ -133,7 +133,7 @@ export class AuthService {
 		const { token, expiresAt } =
 			await this.tokenService.generateUserToken(input);
 
-		await this.mailService.sendTokenToRegisterUser(
+		await this.mailService.sendUserToken(
 			{
 				token,
 				expiresAt,
@@ -153,7 +153,7 @@ export class AuthService {
 	}
 
 	async activateToken(token: string) {
-		const decoded = await this.tokenService.verifyRegisterToken(token);
+		const decoded = await this.tokenService.verifyUserToken(token);
 
 		// delete key of token
 		delete decoded.iat;

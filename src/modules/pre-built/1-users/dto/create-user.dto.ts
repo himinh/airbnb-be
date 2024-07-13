@@ -1,8 +1,8 @@
-import { Type } from "class-transformer";
+import { Transform } from "class-transformer";
 import {
 	IsArray,
 	IsBoolean,
-	IsDate,
+	IsDateString,
 	IsEmail,
 	IsEnum,
 	IsNotEmpty,
@@ -26,6 +26,7 @@ export class CreateUserDto {
 	@IsOptional()
 	@IsString()
 	@IsEmail()
+	@Transform(({ value }) => value.toLowerCase())
 	email?: string;
 
 	@IsOptional()
@@ -48,9 +49,10 @@ export class CreateUserDto {
 	@IsString()
 	fullName: string;
 
-	@IsNotEmpty()
-	@Type(() => Date)
-	@IsDate()
+	@IsOptional()
+	// @Type(() => Date)
+	// @IsDate()
+	@IsDateString()
 	dateBirth?: Date;
 
 	@IsOptional()

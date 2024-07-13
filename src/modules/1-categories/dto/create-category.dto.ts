@@ -16,6 +16,10 @@ export class CreateCategoryDto {
 	name: string;
 
 	@IsOptional()
+	@IsString()
+	category?: string;
+
+	@IsOptional()
 	@IsNumber()
 	position?: number;
 

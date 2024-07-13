@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
+import { ListingModule } from "~modules/2-listings/listing.module";
 import { CategoryController } from "./category.controller";
 import { CategoryService } from "./category.service";
 import { Category, CategorySchema } from "./schemas/category.schema";
@@ -12,6 +13,7 @@ import { Category, CategorySchema } from "./schemas/category.schema";
 				schema: CategorySchema,
 			},
 		]),
+		ListingModule,
 	],
 	controllers: [CategoryController],
 	providers: [CategoryService],

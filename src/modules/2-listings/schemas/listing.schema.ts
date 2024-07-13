@@ -22,6 +22,9 @@ export class Listing {
 	@Prop({ type: String, required: true })
 	title: string;
 
+	@Prop({ type: String, requiredPaths: ["title"] })
+	slug: string;
+
 	@Prop({ type: String, required: true })
 	description: string;
 
@@ -41,7 +44,7 @@ export class Listing {
 	images: string;
 
 	@Prop({ type: Date, required: true })
-	publishAt: Date;
+	publishDate: Date;
 
 	@Prop({ type: Number, required: true })
 	guestCount: number;

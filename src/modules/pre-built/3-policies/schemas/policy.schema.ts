@@ -47,6 +47,9 @@ export class Policy {
 	@Prop({ type: Boolean, default: false })
 	readonly isPublic: boolean;
 
+	@Prop({ type: Boolean, default: false })
+	readonly isAuthenticated: boolean;
+
 	@Prop({
 		type: [{ type: SchemaTypes.ObjectId, ref: UserGroup.name }],
 	})

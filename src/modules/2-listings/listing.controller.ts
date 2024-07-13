@@ -53,7 +53,7 @@ export class ListingController {
 	//  ----- Method: PATCH -----
 	@Patch("/:id/wishlist/:action")
 	@HttpCode(HttpStatus.OK)
-	async addToWishlist(
+	async updateWishlist(
 		@GetCurrentUserId() userId: Types.ObjectId,
 		@Param("id", ParseObjectIdPipe) listingId: Types.ObjectId,
 		@Param("action", new ParseEnumPipe(ActionEnum)) action: ActionEnum,

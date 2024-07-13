@@ -84,32 +84,39 @@ export class AppGuard implements CanActivate {
 	}
 
 	private isAccessAllowed(policy: UserPolicyType, user: TokenPayload) {
-		const { userGroupIds, userIds, blockedUserGroupIds, blockedUserIds } =
-			policy;
+		const {
+			userGroupIds,
+			userIds,
+			blockedUserGroupIds,
+			blockedUserIds,
+			isAuthenticated,
+		} = policy;
 
 		const isHasBlockedUser = blockedUserIds?.some(
 			(id) => id.toString() === user._id.toString(),
 		);
 
-		if (isHasBlockedUser) return false;
-
-		const isHasUser = userIds.some(
-			(id) => id.toString() === user._id.toString(),
-		);
-
-		if (isHasUser) return true;
+		if (isHasBlockedUser) return false; // block all users in blocked users
 
 		const isHasBlockedGroup = blockedUserGroupIds?.some((id) =>
 			user.userGroupIds.some((gid) => gid.toString() === id.toString()),
 		);
 
-		if (isHasBlockedGroup) return false;
+		if (isHasBlockedGroup) return false; // block all users in blocked groups
+
+		if (isAuthenticated) return true; // allow all authenticated users
+
+		const isHasUser = userIds.some(
+			(id) => id.toString() === user._id.toString(),
+		);
+
+		if (isHasUser) return true; // allow all users in userIds
 
 		const isHasGroup = userGroupIds.some((id) =>
 			user.userGroupIds.some((gid) => gid.toString() === id.toString()),
 		);
 
-		return isHasGroup;
+		return isHasGroup; // allow all users in userGroupIds
 	}
 
 	private async getPolicy(
@@ -134,6 +141,7 @@ export class AppGuard implements CanActivate {
 			userGroupIds,
 			blockedUserGroupIds,
 			blockedUserIds,
+			isAuthenticated,
 		} = policy;
 
 		// save to cache
@@ -143,6 +151,7 @@ export class AppGuard implements CanActivate {
 			userIds,
 			blockedUserGroupIds,
 			blockedUserIds,
+			isAuthenticated,
 		});
 
 		return policy;

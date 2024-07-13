@@ -13,6 +13,9 @@ export class Category {
 	@Prop({ type: String, required: true })
 	name: string;
 
+	@Prop({ type: String })
+	description?: string;
+
 	@Prop({ type: Number, unique: true })
 	position?: number;
 
